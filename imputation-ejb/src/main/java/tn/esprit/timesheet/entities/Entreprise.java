@@ -21,7 +21,10 @@ public class Entreprise implements Serializable{
 	
 	private String raisonSocial;
 	
-	@OneToMany
+	@OneToMany(mappedBy="entreprise")
 	private List<Departement> departements;
+	
+	
+	
 
 }

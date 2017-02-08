@@ -1,11 +1,20 @@
 package tn.esprit.timesheet.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employe implements Serializable {
@@ -18,12 +27,22 @@ public class Employe implements Serializable {
 	
 	private String nom;
 	
+	//@Column(unique=true)
 	private String email;
 	
 	private boolean isActif;
 	
-	Role role;
+	@Enumerated(EnumType.STRING)
+	//@NotNull
+	private Role role;
 	
+	@ManyToMany(mappedBy="employes")
+	//@NotNull
+	private List<Departement> departement;
 	
+	@OneToOne(mappedBy="employe")
+	private Contrat contrat;
 	
+	@OneToMany(mappedBy="employe")
+	private List<Timesheet> timesheets;
 }
