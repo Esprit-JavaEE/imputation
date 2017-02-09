@@ -6,6 +6,12 @@ import javax.persistence.Id;
 
 public class MissionExterne extends Mission {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3046278688391172322L;
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -15,5 +21,38 @@ public class MissionExterne extends Mission {
 	
 	
 	private float tauxJournalierMoyen;
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getEmailFacturation() {
+		return emailFacturation;
+	}
+
+
+	public void setEmailFacturation(String emailFacturation) {
+		this.emailFacturation = emailFacturation;
+	}
+
+
+	public float getTauxJournalierMoyen() {
+		return tauxJournalierMoyen;
+	}
+
+
+	public void setTauxJournalierMoyen(float tauxJournalierMoyen) {
+		this.tauxJournalierMoyen = tauxJournalierMoyen;
+	}
+	
+	
+	
 
 }
