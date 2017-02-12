@@ -16,9 +16,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Employe implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1396669830860400871L;
 
 	@Id
@@ -47,7 +44,20 @@ public class Employe implements Serializable {
 	
 	@OneToMany(mappedBy="employe")
 	private List<Timesheet> timesheets;
-
+	
+	
+	public Employe() {
+		super();
+	}
+	
+	public Employe(String nom, String prenom, String email, boolean isActif, Role role) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.isActif = isActif;
+		this.role = role;
+	}
+	
 	public int getId() {
 		return id;
 	}

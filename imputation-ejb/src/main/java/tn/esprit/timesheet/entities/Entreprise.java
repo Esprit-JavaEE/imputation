@@ -17,8 +17,7 @@ public class Entreprise implements Serializable{
 	 */
 	private static final long serialVersionUID = 3152690779535828408L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+
 	private int id;
 	
 	private String name;
@@ -29,6 +28,18 @@ public class Entreprise implements Serializable{
 	@OneToMany(mappedBy="entreprise")
 	private List<Departement> departements;
 
+	public Entreprise() {
+		super();
+	}
+
+	public Entreprise(String name, String raisonSocial) {
+		this.name = name;
+		this.raisonSocial = raisonSocial;
+	}
+
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -53,6 +64,8 @@ public class Entreprise implements Serializable{
 		this.raisonSocial = raisonSocial;
 	}
 
+	
+	@OneToMany(mappedBy="entreprise")
 	public List<Departement> getDepartements() {
 		return departements;
 	}

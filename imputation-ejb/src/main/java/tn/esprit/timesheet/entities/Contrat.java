@@ -1,7 +1,6 @@
 package tn.esprit.timesheet.entities;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,9 +14,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class Contrat implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6191889143079517027L;
 
 	@Id
@@ -34,7 +30,16 @@ public class Contrat implements Serializable {
 	@OneToOne
 	private Employe employe;
 
-
+	public Contrat() {
+		super();
+	}
+	
+	public Contrat(Date dateDebut, String typeContrat, float salaire) {
+		this.dateDebut = dateDebut;
+		this.typeContrat = typeContrat;
+		this.salaire = salaire;
+	}
+	
 	public Date getDateDebut() {
 		return dateDebut;
 	}

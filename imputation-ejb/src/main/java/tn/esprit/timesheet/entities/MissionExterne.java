@@ -6,9 +6,6 @@ import javax.persistence.Id;
 
 public class MissionExterne extends Mission {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3046278688391172322L;
 
 
@@ -22,12 +19,23 @@ public class MissionExterne extends Mission {
 	
 	private float tauxJournalierMoyen;
 
-
+	
+	public MissionExterne() {
+		super();
+	}
+	
+	public MissionExterne(String emailFacturation, float tauxJournalierMoyen) {
+		this.emailFacturation = emailFacturation;
+		this.tauxJournalierMoyen = tauxJournalierMoyen;
+	}
+	
+	
+	@Override
 	public int getId() {
 		return id;
 	}
 
-
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}

@@ -13,10 +13,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Departement implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -357738161698377833L;
 
 	@Id
@@ -34,6 +31,14 @@ public class Departement implements Serializable {
 	@ManyToOne
 	private Entreprise entreprise;
 
+	public Departement() {
+		super();
+	}
+	
+	public Departement(String name) {
+		this.name = name;
+	}
+	
 	public int getId() {
 		return id;
 	}

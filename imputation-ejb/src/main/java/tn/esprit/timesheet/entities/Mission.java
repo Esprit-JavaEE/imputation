@@ -12,10 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Mission implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -5369734855993305723L;
 
 	@Id
@@ -31,7 +28,16 @@ public class Mission implements Serializable {
 	
 	@OneToMany(mappedBy="mission")
 	private  List<Timesheet> timesheets;
+	
+	public Mission() {
+		super();
+	}
 
+	public Mission(String name, String description){
+		this.name = name;
+		this.description = description;
+	}
+	
 	public int getId() {
 		return id;
 	}
