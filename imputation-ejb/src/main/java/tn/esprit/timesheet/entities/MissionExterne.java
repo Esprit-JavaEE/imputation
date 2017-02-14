@@ -1,17 +1,11 @@
 package tn.esprit.timesheet.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Entity;
 
+@Entity
 public class MissionExterne extends Mission {
 	
 	private static final long serialVersionUID = -3046278688391172322L;
-
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
 	
 	
 	private String emailFacturation;
@@ -29,17 +23,6 @@ public class MissionExterne extends Mission {
 		this.tauxJournalierMoyen = tauxJournalierMoyen;
 	}
 	
-	
-	@Override
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
-
 
 	public String getEmailFacturation() {
 		return emailFacturation;
