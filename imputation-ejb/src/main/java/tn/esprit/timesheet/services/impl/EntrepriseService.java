@@ -1,7 +1,6 @@
 package tn.esprit.timesheet.services.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,13 +8,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import tn.esprit.timesheet.entities.Contrat;
 import tn.esprit.timesheet.entities.Departement;
-import tn.esprit.timesheet.entities.Employe;
 import tn.esprit.timesheet.entities.Entreprise;
-import tn.esprit.timesheet.entities.Mission;
 import tn.esprit.timesheet.services.interfaces.EntrepriseServiceRemote;
-import tn.esprit.timesheet.services.interfaces.EmployeServiceRemote;
 
 @Stateless
 @LocalBean
@@ -53,19 +48,25 @@ public class EntrepriseService implements EntrepriseServiceRemote {
 	}
 	
 	@Override
-	public List<Departement> getAllDepartementsByEntreprise(int entrepriseId) {
+	public List<String> getAllDepartementsNamesByEntreprise(int entrepriseId) {
+		//Je recommande qu'on n'envoi pas des managed entity vers une autre JVM
 		Entreprise entrepriseManagedEntity = em.find(Entreprise.class, entrepriseId);
-		return new ArrayList<>(entrepriseManagedEntity.getDepartements());
-	}
-
-	@Override
-	public void deleteEntreprise(Entreprise entreprise){
-		em.remove(em.merge(entreprise));
+		List<String> depNames = new ArrayList<>();
+		for(Departement dep : entrepriseManagedEntity.getDepartements()){
+			depNames.add(dep.getName());
+		}
+		
+		return depNames;
 	}
 	
 	@Override
-	public void deleteDepartement(Departement dep){
-		em.remove(em.merge(dep));
+	public void deleteEntrepriseById(int entrepriseId){
+		em.remove(em.find(Entreprise.class, entrepriseId));
+	}
+	
+	@Override
+	public void deleteDepartementById(int depId){
+		em.remove(em.find(Departement.class, depId));
 	}
 
 
