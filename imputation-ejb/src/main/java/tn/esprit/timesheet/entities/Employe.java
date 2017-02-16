@@ -37,7 +37,7 @@ public class Employe implements Serializable {
 	
 	@ManyToMany(mappedBy="employes")
 	//@NotNull
-	private List<Departement> departement;
+	private List<Departement> departements;
 	
 	@OneToOne(mappedBy="employe")
 	private Contrat contrat;
@@ -106,12 +106,12 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 
-	public List<Departement> getDepartement() {
-		return departement;
+	public List<Departement> getDepartements() {
+		return departements;
 	}
 
-	public void setDepartement(List<Departement> departement) {
-		this.departement = departement;
+	public void setDepartements(List<Departement> departement) {
+		this.departements = departement;
 	}
 
 	public Contrat getContrat() {

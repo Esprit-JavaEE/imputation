@@ -13,7 +13,6 @@ import tn.esprit.timesheet.entities.Entreprise;
 import tn.esprit.timesheet.services.interfaces.EntrepriseServiceRemote;
 
 @Stateless
-@LocalBean
 public class EntrepriseService implements EntrepriseServiceRemote {
 
 	@PersistenceContext(unitName = "imputation-ejb")

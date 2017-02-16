@@ -17,12 +17,14 @@ public class MissionExterne extends Mission {
 	public MissionExterne() {
 		super();
 	}
-	
-	public MissionExterne(String emailFacturation, float tauxJournalierMoyen) {
+
+
+	public MissionExterne(String name, String description, String emailFacturation, float tauxJournalierMoyen) {
+		super(name, description);
 		this.emailFacturation = emailFacturation;
 		this.tauxJournalierMoyen = tauxJournalierMoyen;
 	}
-	
+
 
 	public String getEmailFacturation() {
 		return emailFacturation;

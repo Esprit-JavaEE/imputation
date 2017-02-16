@@ -4,14 +4,13 @@ import java.util.Date;
 
 import javax.ejb.Remote;
 
-import tn.esprit.timesheet.entities.Departement;
-import tn.esprit.timesheet.entities.Employe;
 import tn.esprit.timesheet.entities.Mission;
 
 @Remote
 public interface TimesheetServiceRemote {
-	public void ajouterMission(Mission mission);
-	public void affecterMissionADepartement(Mission mission, Departement dep);
-	public void ajouterTimesheet(Mission mission, Employe employe, Date dateDebut, Date dateFin);
+	public int ajouterMission(Mission mission);
+	public void affecterMissionADepartement(int missionId, int depId);
+	public void ajouterTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin);
+	public void validerTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin, int validateurId);
 	
 }

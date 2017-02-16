@@ -38,6 +38,7 @@ public class Mission implements Serializable {
 		this.description = description;
 	}
 	
+
 	public int getId() {
 		return id;
 	}
