@@ -1,11 +1,14 @@
 package tn.esprit.timesheet.services.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import tn.esprit.timesheet.entities.Departement;
 import tn.esprit.timesheet.entities.Employe;
@@ -84,6 +87,24 @@ public class TimesheetService implements TimesheetServiceRemote{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		System.out.println("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
 
+	}
+
+	@Override
+	public List<String> findAllMissionByEmployeJPQL(int employeId) {
+		//Employe employe = entityManager.find(Employe.class, employeId);
+	
+		TypedQuery<Mission> query= entityManager.createQuery(
+				"select m from Mission m join m.timesheets t join t.employe e where e.id=:employeId", Mission.class);
+		query.setParameter("employeId", employeId);
+		List<Mission> missions =  query.getResultList();
+		
+		List<String> missionNames = new ArrayList<>();
+		
+		for(Mission mission : missions){
+			missionNames.add(mission.getName());
+		}
+		
+		return missionNames;
 	}
 
 }

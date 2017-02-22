@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import tn.esprit.timesheet.entities.Contrat;
 import tn.esprit.timesheet.entities.Departement;
@@ -103,5 +105,57 @@ public class EmployeService implements EmployeServiceRemote {
 	}
 
 
+	@Override
+	public long getNombreEmployeJPQL() {
+		TypedQuery<Long> query = em.createQuery("select count(e) from Employe e", Long.class);
+		return query.getSingleResult();
+	}
 
+
+	@Override
+	public List<String> getAllEmployeNamesJPQL() {
+		List<Employe> employes = em.createQuery("select e from Employe e", Employe.class).getResultList();
+		List<String> employeNames = new ArrayList<>();
+		for(Employe employe : employes){
+			employeNames.add(employe.getNom());
+		}
+		
+		return employeNames;
+	}
+	
+	@Override
+	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId){
+		Query query = em.createQuery("update Employe e set email=:email where e.id=:employeId");
+		query.setParameter("email", email);
+		query.setParameter("employeId", employeId);
+		int modified = query.executeUpdate();
+		if(modified == 1){
+			System.out.println("successfully updated");
+		}else{
+			System.out.println("failed to update");
+		}
+	}
+
+
+	@Override
+	public void deleteAllContratJPQL() {
+		int modified = em.createQuery("delete from Contrat").executeUpdate();
+		if(modified > 1){
+			System.out.println("successfully deleted");
+		}else{
+			System.out.println("failed to delete");
+		}
+	}
+
+
+	@Override
+	public float getSalaireByEmployeIdJPQL(int employeId) {
+		TypedQuery<Float> query = em.createQuery("select c.salaire from Contrat c join c.employe e where e.id=:employeId", Float.class);
+		query.setParameter("employeId", employeId);	
+		return query.getSingleResult();
+	}
+	
+	
+	
+	
 }

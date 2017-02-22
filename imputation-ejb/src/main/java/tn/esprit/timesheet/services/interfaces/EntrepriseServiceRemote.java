@@ -1,4 +1,4 @@
-package tn.esprit.timesheet.services.interfaces;
+package tn.esprit .timesheet.services.interfaces;
 
 import java.util.List;
 
@@ -14,4 +14,5 @@ public interface EntrepriseServiceRemote {
 	List<String> getAllDepartementsNamesByEntreprise(int entrepriseId);
 	public void deleteEntrepriseById(int entrepriseId);
 	public void deleteDepartementById(int depId);
+	
 }
