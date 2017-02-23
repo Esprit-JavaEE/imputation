@@ -1,4 +1,4 @@
-package tn.esprit.timesheet.services.impl;
+	package tn.esprit.timesheet.services.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class TimesheetService implements TimesheetServiceRemote{
 		//Employe employe = entityManager.find(Employe.class, employeId);
 	
 		TypedQuery<Mission> query= entityManager.createQuery(
-				"select m from Mission m join m.timesheets t join t.employe e where e.id=:employeId", Mission.class);
+				"select DISTINCT m from Mission m join m.timesheets t join t.employe e where e.id=:employeId", Mission.class);
 		query.setParameter("employeId", employeId);
 		List<Mission> missions =  query.getResultList();
 		
