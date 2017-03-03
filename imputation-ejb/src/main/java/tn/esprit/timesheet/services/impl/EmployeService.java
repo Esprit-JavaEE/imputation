@@ -69,9 +69,31 @@ public class EmployeService implements EmployeServiceRemote {
 	}
 
 
+//	@Override
+//	public void deleteEmployeById(int employeId) {
+//		Employe employe = em.find(Employe.class, employeId);
+//		
+//		//Desaffecter l'employe de tous les departements
+//		//c'est le bout master qui permet de mettre a jour
+//		//la table d'association
+//		for(Departement dep : employe.getDepartements()){
+//			dep.getEmployes().remove(employe);
+//		}
+//		
+//		em.remove(employe);
+//	}
+	
 	@Override
 	public void deleteEmployeById(int employeId) {
 		Employe employe = em.find(Employe.class, employeId);
+		
+		//Desaffecter l'employe de tous les departements
+		//c'est le bout master qui permet de mettre a jour
+		//la table d'association
+		for(Departement dep : employe.getDepartements()){
+			dep.getEmployes().remove(employe);
+		}
+		
 		em.remove(employe);
 	}
 
@@ -84,10 +106,11 @@ public class EmployeService implements EmployeServiceRemote {
 		for(int index = 0; index < employeNb; index++){
 			if(dep.getEmployes().get(index).getId() == employeId){
 				dep.getEmployes().remove(index);
+				break;//a revoir
 			}
 		}
 		
-		em.merge(dep);
+		//em.merge(dep);
 	}
 
 

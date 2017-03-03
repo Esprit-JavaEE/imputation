@@ -1,9 +1,12 @@
 package tn.esprit.timesheet.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +20,9 @@ public class Entreprise implements Serializable{
 	 */
 	private static final long serialVersionUID = 3152690779535828408L;
 
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
@@ -25,8 +30,10 @@ public class Entreprise implements Serializable{
 	
 	private String raisonSocial;
 	
-	@OneToMany(mappedBy="entreprise")
-	private List<Departement> departements;
+	@OneToMany(mappedBy="entreprise", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER)
+	private List<Departement> departements = new ArrayList<>();
 
 	public Entreprise() {
 		super();
@@ -37,9 +44,6 @@ public class Entreprise implements Serializable{
 		this.raisonSocial = raisonSocial;
 	}
 
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -64,8 +68,6 @@ public class Entreprise implements Serializable{
 		this.raisonSocial = raisonSocial;
 	}
 
-	
-	@OneToMany(mappedBy="entreprise")
 	public List<Departement> getDepartements() {
 		return departements;
 	}
@@ -75,6 +77,12 @@ public class Entreprise implements Serializable{
 	}
 	
 	
-	
+	public void addDepartement(Departement departement){
+		departement.setEntreprise(this);
+		this.departements.add(departement);
+	}
+
+
+
 
 }
