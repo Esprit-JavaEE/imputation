@@ -40,20 +40,16 @@ public class TimesheetService implements TimesheetServiceRemote{
 
 	@Override
 	public void ajouterTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin) {
-		Mission mission = entityManager.find(Mission.class, missionId);
-		Employe employe = entityManager.find(Employe.class, employeId);
-		
-		Timesheet timesheet = new Timesheet();
 		TimesheetPK timesheetPK = new TimesheetPK();
 		timesheetPK.setDateDebut(dateDebut);
 		timesheetPK.setDateFin(dateFin);
-		timesheetPK.setIdEmploye(employe.getId());
-		timesheetPK.setIdMission(mission.getId());
+		timesheetPK.setIdEmploye(employeId);
+		timesheetPK.setIdMission(missionId);
 		
+		Timesheet timesheet = new Timesheet();
 		timesheet.setTimesheetPK(timesheetPK);
 		timesheet.setValide(false); //par defaut non valide
 		entityManager.persist(timesheet);
-		
 	}
 
 	@Override
@@ -61,7 +57,7 @@ public class TimesheetService implements TimesheetServiceRemote{
 		Employe validateur = entityManager.find(Employe.class, validateurId);
 		Mission mission = entityManager.find(Mission.class, missionId);
 		
-		//verifier s'il est un chef de departement
+		//verifier s'il est un chef de departement (interet des enum)
 		if(!validateur.getRole().equals(Role.CHEF_DEPARTEMENT)){
 			System.out.println("l'employe doit etre chef de departement pour valider une feuille de temps !");
 			return;
@@ -74,7 +70,6 @@ public class TimesheetService implements TimesheetServiceRemote{
 				break;
 			}
 		}
-		
 		if(!chefDeLaMission){
 			System.out.println("l'employe doit etre chef de departement de la mission en question");
 			return;
@@ -83,28 +78,37 @@ public class TimesheetService implements TimesheetServiceRemote{
 		TimesheetPK timesheetPK = new TimesheetPK(missionId, employeId, dateDebut, dateFin);
 		Timesheet timesheet = entityManager.find(Timesheet.class, timesheetPK);
 		timesheet.setValide(true);
-		entityManager.merge(timesheet);
+		
+		//Comment Lire une date de la base de données
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		System.out.println("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
-
 	}
 
 	@Override
-	public List<String> findAllMissionByEmployeJPQL(int employeId) {
-		//Employe employe = entityManager.find(Employe.class, employeId);
-	
+	public List<Mission> findAllMissionByEmployeJPQL(int employeId) {	
 		TypedQuery<Mission> query= entityManager.createQuery(
-				"select DISTINCT m from Mission m join m.timesheets t join t.employe e where e.id=:employeId", Mission.class);
+		"select DISTINCT m from Mission m join m.timesheets t join t.employe e where e.id=:employeId", 
+		Mission.class);
 		query.setParameter("employeId", employeId);
-		List<Mission> missions =  query.getResultList();
-		
-		List<String> missionNames = new ArrayList<>();
-		
-		for(Mission mission : missions){
-			missionNames.add(mission.getName());
-		}
-		
-		return missionNames;
+		return query.getResultList();
 	}
+	
+	@Override
+	public List<Employe> getAllEmployeByMission(int missionId) {	
+		TypedQuery<Employe> query= entityManager.createQuery(
+		"select DISTINCT e from Employe e "
+		+ "join e.timesheets t "
+		+ "join t.mission m "
+		+ "where m.id=:misId", 
+		Employe.class);
+		
+		query.setParameter("misId", missionId);
+		
+		return query.getResultList();
+	}
+	
+//	for(Employe employe : employes){
+//		System.out.println("emp ID : " + employe.getId());
+//	}
 
 }

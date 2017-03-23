@@ -46,6 +46,11 @@ public class EntrepriseService implements EntrepriseServiceRemote {
 
 		depManagedEntity.setEntreprise(entrepriseManagedEntity);
 		//inutile de faire : em.merge(depManagedEntity);
+		//Dans ce cas, le merge n'est pas utile parce que depManagedEntity est 
+		//dans l'état managed, autrement dit, 
+		//depManagedEntity existe dans le persistence context.
+		//n'importe quel entité dans le persistence context sera automatiquement
+		//synchronisé avec la base de donnees
 	}
 	
 	
