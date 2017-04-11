@@ -3,9 +3,12 @@ package tn.esprit.timesheet.services.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -20,10 +23,13 @@ import tn.esprit.timesheet.entities.Timesheet;
 import tn.esprit.timesheet.services.interfaces.EmployeServiceRemote;
 
 @Stateless
+@LocalBean
 public class EmployeService implements EmployeServiceRemote {
 
 	@PersistenceContext(unitName = "imputation-ejb")
 	EntityManager em;
+	
+	static final  Logger logger =Logger.getGlobal();
 
 	@Override
 	public int ajouterEmploye(Employe employe) {
@@ -218,8 +224,7 @@ public class EmployeService implements EmployeServiceRemote {
 		query.setParameter("dateF", dateFin, TemporalType.DATE);	
 
 		return query.getResultList();
-	}
-	
+		
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
 //	for(Timesheet timesheet : timesheets){
 //		System.out.println("DateDebut : "+ 
@@ -229,6 +234,30 @@ public class EmployeService implements EmployeServiceRemote {
 //		System.out.println("Mission ID : " + timesheet.getMission().getId());
 //		System.out.println("Employe ID : " + timesheet.getEmploye().getId());
 //	}
+	}
+
+
+	@Override
+	public Employe getEmployeByEmailAndPassword(String email, String password) {
+		TypedQuery<Employe> query = em.createQuery("Select e from Employe e "
+				+ "where e.email=:email and "
+				+ "e.password=:password", Employe.class);
+		
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		
+		Employe employe = null;
+		
+		try{
+			employe = query.getSingleResult();
+		}catch(NoResultException e){
+			logger.info("Aucun employe trouve avec email : " + email);
+		}
+		
+		return employe;
+	}
+	
+
 	
 	
 }

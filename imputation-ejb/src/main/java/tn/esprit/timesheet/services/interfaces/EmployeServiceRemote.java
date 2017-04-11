@@ -33,5 +33,7 @@ public interface EmployeServiceRemote {
 	public float getSalaireByEmployeIdJPQL(int employeId);
 	public Double getSalaireMoyenByDepartementId(int departementId);
 	public List<Timesheet> getTimesheetsByMissionAndDate(Employe employe, Mission mission, Date dateDebut, Date dateFin);
+	public Employe getEmployeByEmailAndPassword(String email, String password);
+
 
 }

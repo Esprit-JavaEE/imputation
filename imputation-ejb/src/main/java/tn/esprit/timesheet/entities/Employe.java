@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,7 +28,9 @@ public class Employe implements Serializable {
 	
 	private String nom;
 	
-	//@Column(unique=true)
+	private String password;
+	
+	@Column(unique=true)
 	private String email;
 	
 	private boolean isActif;
@@ -59,6 +62,16 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 	
+	
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public int getId() {
 		return id;
 	}
