@@ -9,6 +9,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -60,6 +61,7 @@ public class EmployeService implements EmployeServiceRemote {
 		em.persist(contrat);
 		return contrat.getReference();
 	}
+	
 	
 
 	@Override
@@ -159,6 +161,10 @@ public class EmployeService implements EmployeServiceRemote {
 			System.out.println("failed to update");
 		}
 	}
+	
+	public void updateEmploye(Employe employe){
+		em.merge(employe);
+	}
 
 
 	@Override
@@ -251,10 +257,15 @@ public class EmployeService implements EmployeServiceRemote {
 		try{
 			employe = query.getSingleResult();
 		}catch(NoResultException e){
-			logger.info("Aucun employe trouve avec email : " + email);
+			logger.warning("Aucun employe trouve avec email : " + email);
 		}
 		
 		return employe;
+	}
+
+
+	public List<Employe> getAllEmployes() {
+		return em.createQuery("select e from Employe e", Employe.class).getResultList();
 	}
 	
 

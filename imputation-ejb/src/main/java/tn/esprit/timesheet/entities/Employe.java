@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employe implements Serializable {
@@ -30,7 +31,7 @@ public class Employe implements Serializable {
 	
 	private String password;
 	
-	@Column(unique=true)
+	@Column(unique=true, nullable=false) // A revoir et rajouter dans le cours
 	private String email;
 	
 	private boolean isActif;
@@ -62,6 +63,26 @@ public class Employe implements Serializable {
 		this.role = role;
 	}
 	
+	public Employe(String nom, String prenom, String email, String password, boolean isActif, Role role) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.isActif = isActif;
+		this.role = role;
+		this.password = password;
+	}
+	
+	
+	public Employe(String nom, String prenom, String email, String password, 
+			boolean isActif, Role role, Integer id) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.isActif = isActif;
+		this.role = role;
+		this.password = password;
+		this.id = id;
+	}
 	
 	
 	public String getPassword() {

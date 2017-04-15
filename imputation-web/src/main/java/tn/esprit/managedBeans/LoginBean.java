@@ -1,7 +1,5 @@
 package tn.esprit.managedBeans;
 
-
-
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +13,7 @@ import tn.esprit.timesheet.services.impl.EmployeService;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
+
 	private String login;
 	private String password;
 	private Employe employe;
