@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/template/template.xhtml">
+
+	<ui:define name="title">Ajouter contrat a un employe existant</ui:define>
+	<ui:define name="content">
+
+		<h:form>
+			<table>
+				<tr>
+					<td>
+					<h:outputText value="Employe" /> 
+					</td>
+					<td>
+						<h:selectOneMenu value="#{contratBean.selectedEmployeId}" >
+							<f:selectItems value="#{contratBean.employes}" 
+								var="employe" itemValue="#{employe.id}" 
+								itemLabel="#{employe.nom.concat(contratBean.htmlSpace).concat(employe.prenom)}"
+								itemLabelEscaped="false" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Date debut" /> 
+					</td>
+					<td>
+						<h:inputText id="date" value="#{contratBean.date}">
+								<f:convertDateTime pattern="dd-MM-yyyy"/>
+						</h:inputText>
+					</td>
+					<td>
+						<h:message for="date" style="color:red" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+					<h:outputText value="Salaire" />
+					</td>
+					<td>
+					<h:inputText value="#{contratBean.salaire}" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+					<h:outputText value="Type contrat" /> 
+					</td>
+					<td>
+					<h:inputText value="#{contratBean.typeContrat}" />
+					</td>
+				</tr>
+				
+			</table>
+			
+			<h:commandButton action="#{contratBean.ajouterContrat(0)}" value="Ajouter contrat" />
+			
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

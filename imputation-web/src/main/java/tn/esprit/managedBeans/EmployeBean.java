@@ -3,14 +3,9 @@ package tn.esprit.managedBeans;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.html.HtmlDataTable;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
-
 import tn.esprit.timesheet.entities.Employe;
 import tn.esprit.timesheet.entities.Role;
 import tn.esprit.timesheet.services.impl.EmployeService;
@@ -18,73 +13,90 @@ import tn.esprit.timesheet.services.impl.EmployeService;
 @ManagedBean
 @ViewScoped
 public class EmployeBean {
-
 	private String prenom;
 	private String nom;
 	private String password;
 	private String email;
 	private boolean isActif;
-	private Role role;
+	private Role selectedRole;
 	private List<Employe> employes;
-	private HtmlDataTable employesTable;
-	private Integer employeId;
-
+	private Integer employeIdToBeUpdated; // @viewScoped est necessaire, 
+										//sinon la valeur sera perdu
+	// injection de dépendances
 	@EJB
 	EmployeService employeService;
 	
-	@Inject
+	// injection de dépendances
+	@ManagedProperty(value = "#{loginBean}")
 	LoginBean loginBean;
 	
-	public void addEmploye(){
-		//if(loginBean != null && loginBean.isLoggedIn()){
-			employeService.ajouterEmploye(new Employe(nom, prenom, email, password, isActif, role));
-		//}else{
-			//FacesContext.getCurrentInstance().addMessage("welcome:ajoutEmp", new FacesMessage("Erreur !"));
-		//} 
-	}
-	
-	public void modifierEmploye(){
-		//if(loginBean != null && loginBean.isLoggedIn()){
-			employeService.updateEmploye(new Employe(nom, prenom, email, password, isActif, role, employeId));
-		//}else{
-			//FacesContext.getCurrentInstance().addMessage("welcome:ajoutEmp", new FacesMessage("Erreur !"));
-		//}
-	}
-	
-	public void supprimer(ActionEvent event){
-		String employeId = FacesContext.getCurrentInstance()
-			.getExternalContext().getRequestParameterMap().get("employeId");
+	public String addEmploye(){
+		if(loginBean == null || !loginBean.isLoggedIn()){
+			return "/login?faces-redirect=true";
+		}
 		
-		employeService.deleteEmployeById(Integer.valueOf(employeId));
+		employeService.ajouterEmploye(new Employe(nom, prenom, 
+				email, password, isActif, selectedRole));
+		
+		return "null";
 	}
 	
-	public void modifier(){
-		Employe employe = (Employe)employesTable.getRowData();
+	//FacesContext.getCurrentInstance().addMessage("welcome:ajoutEmp", new FacesMessage("Erreur !"));
+
+	//Ceci ne fonctionne qu'avec @ViewScoped sinon les valeurs employeId, role ... seront perdu, 
+	//parce qu'il sont sauvegardé dans l'ancienne requete : appel a la methode modifier()
+	public String mettreAjourEmploye(){
+		if(loginBean == null || !loginBean.isLoggedIn()){
+			return "/login?faces-redirect=true";
+		}
+		
+		employeService.updateEmploye(new Employe(nom, prenom, 
+				email, password, isActif, selectedRole, employeIdToBeUpdated));
+		
+		return "null";
+	}
+	
+	public String supprimer(Integer employeID){
+		if(loginBean == null || !loginBean.isLoggedIn()){
+			return "/login?faces-redirect=true";
+		}
+		
+		employeService.deleteEmployeById(employeID);
+		
+		return "null";
+	}
+	
+	public String modifier(Employe employe){
+		if(loginBean == null || !loginBean.isLoggedIn()){
+			return "/login?faces-redirect=true";
+		}
+		
 		this.setEmail(employe.getEmail());
 		this.setPassword(employe.getPassword());
 		this.setActif(employe.isActif());
 		this.setPrenom(employe.getPrenom());
 		this.setNom(employe.getNom());
 		this.setRole(employe.getRole());
-		this.setEmployeId(employe.getId());
+		this.setEmployeIdToBeUpdated(employe.getId());
+		
+		return "null";
 	}
 
 	
-	
-	public int getEmployeId() {
-		return employeId;
+	public LoginBean getLoginBean() {
+		return loginBean;
 	}
 
-	public void setEmployeId(int employeId) {
-		this.employeId = employeId;
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
-	public HtmlDataTable getEmployesTable() {
-		return employesTable;
+	public Integer getEmployeIdToBeUpdated() {
+		return employeIdToBeUpdated;
 	}
 
-	public void setEmployesTable(HtmlDataTable employesTable) {
-		this.employesTable = employesTable;
+	public void setEmployeIdToBeUpdated(Integer employeIdToBeUpdated) {
+		this.employeIdToBeUpdated = employeIdToBeUpdated;
 	}
 
 	public List<Employe> getEmployes() {
@@ -139,11 +151,11 @@ public class EmployeBean {
 	}
 
 	public Role getRole() {
-		return role;
+		return selectedRole;
 	}
 
 	public void setRole(Role role) {
-		this.role = role;
+		this.selectedRole = role;
 	}
 	
 }

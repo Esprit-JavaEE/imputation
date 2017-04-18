@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/template/template.xhtml">
+
+	<ui:define name="title">Gerer les employes</ui:define>
+	<ui:define name="content">
+	
+	
+	<h:form>
+		<br/>
+		<br/>
+		<br/>	
+					<h:dataTable value="#{employeBean.employes}" var="employe" border="1" >
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="login" />
+							</f:facet>
+							<h:outputText value="#{employe.email}" />
+						</h:column>
+	
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="nom" />
+							</f:facet>
+							<h:outputText value="#{employe.nom}" />
+						</h:column>
+	
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="prenom" />
+							</f:facet>
+							<h:outputText value="#{employe.prenom}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="role" />
+							</f:facet>
+							<h:outputText value="#{employe.role}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Actif" />
+							</f:facet>
+							<h:outputText value="#{employe.actif == true ? 'Oui' : 'Non'}" />
+						</h:column>						
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						
+						<h:commandButton action="#{employeBean.supprimer(employe.id)}" value="supprimer"/>
+						
+						<h:commandButton action="#{employeBean.modifier(employe)}" value="Modifier"/>			
+						
+					</h:column>
+
+
+
+				 </h:dataTable>
+				
+				
+	
+				<br/>
+				<br/>
+				<br/>
+	
+		<h:panelGrid columns="2">
+		
+			<h:outputText value="login (email)" />
+			<h:inputText value="#{employeBean.email}" />
+			
+			<h:outputText value="password" />
+			<h:inputSecret value="#{employeBean.password}" />
+			
+			<h:outputText value="nom" />
+			<h:inputText value="#{employeBean.nom}" />
+			
+			<h:outputText value="Prenom" />
+			<h:inputText value="#{employeBean.prenom}" />
+			
+			<h:outputText value="Actif / Inactif" />
+			<h:selectBooleanCheckbox value="#{employeBean.actif}" />
+			
+			<h:outputText value="Role" />
+			<h:selectOneMenu value="#{employeBean.role}">
+			    <f:selectItem itemLabel="Selectionner le role" itemValue=""/>
+				<f:selectItems value="#{data.roles}" />
+			</h:selectOneMenu>
+			
+			<h:commandButton action="#{employeBean.addEmploye()}" value="Ajouter employe" />
+			
+			<h:commandButton action="#{employeBean.mettreAjourEmploye()}" value="Mettre a jour employe" />
+		</h:panelGrid>
+		
+
+				
+				
+
+			
+		
+	</h:form>
+	
+	
+	
+	</ui:define>
+
+</ui:composition>

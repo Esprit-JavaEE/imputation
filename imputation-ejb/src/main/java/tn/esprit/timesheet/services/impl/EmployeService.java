@@ -27,6 +27,7 @@ import tn.esprit.timesheet.services.interfaces.EmployeServiceRemote;
 @LocalBean
 public class EmployeService implements EmployeServiceRemote {
 
+	// injection de dépendances
 	@PersistenceContext(unitName = "imputation-ejb")
 	EntityManager em;
 	

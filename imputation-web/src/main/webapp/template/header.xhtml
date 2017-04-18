@@ -5,6 +5,11 @@
 
 
 	<center>Application Timesheet</center>
+	<h:form>
+		<center>welcome #{loginBean.employe.nom} #{loginBean.employe.prenom}
 
+		<h:commandButton action="#{loginBean.doLogout()}" value="logout" />
+		</center>
+	</h:form>
 
 </ui:composition>

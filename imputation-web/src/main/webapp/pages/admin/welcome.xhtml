@@ -4,99 +4,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/template/template.xhtml">
 
-	<ui:define name="title">welcome</ui:define>
+	<ui:define name="title">Welcome</ui:define>
 	<ui:define name="content">
 	
-	welcome #{loginBean.employe.nom} #{loginBean.employe.prenom}
-	
-	<h:form id="welcome">
-		<h:commandButton action="#{loginBean.doLogout()}" value="logout" />
-	<br/>
-	<br/>
-	<br/>
-	
-					<h:dataTable value="#{employeBean.employes}" var="employe" border="1" binding="#{employeBean.employesTable}">
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="login" />
-						</f:facet>
-						<h:outputText value="#{employe.email}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="nom" />
-						</f:facet>
-						<h:outputText value="#{employe.nom}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="prenom" />
-						</f:facet>
-						<h:outputText value="#{employe.prenom}" />
-					</h:column>
-
-					<h:column>
-						<f:facet name="header">
-							<h:outputText value="Action" />
-						</f:facet>
-						<h:commandButton actionListener="#{employeBean.supprimer}" value="supprimer">
-							<f:param name="employeId" value="#{employe.id}"/>
-						</h:commandButton>
-						
-						<h:commandButton action="#{employeBean.modifier}" value="Modifier"/>
-						
-					</h:column>
-
-				</h:dataTable>
-	
-				<br/>
-				<br/>
-				<br/>
-	
-		<h:panelGrid columns="2">
-		
-			<h:outputText value="login (email)" />
-			<h:inputText value="#{employeBean.email}" />
-			
-			<h:outputText value="password" />
-			<h:inputSecret value="#{employeBean.password}" />
-			
-			<h:outputText value="nom" />
-			<h:inputText value="#{employeBean.nom}" />
-			
-			<h:outputText value="Prenom" />
-			<h:inputText value="#{employeBean.prenom}" />
-			
-			<h:outputText value="Actif / Inactif" />
-			<h:selectBooleanCheckbox value="#{employeBean.actif}" />
-			
-			<h:outputText value="Role" />
-			<h:selectOneMenu value="#{employeBean.role}">
-			    <f:selectItem itemLabel="Selectionner le role" itemValue=""/>
-				<f:selectItems value="#{data.roles}" />
-			</h:selectOneMenu>
-			
-			<h:commandButton id="ajoutEmp" action="#{employeBean.addEmploye()}" value="Ajouter employe" />
-			
-			<h:commandButton action="#{employeBean.modifierEmploye()}" value="Mettre a jour employe" />
-			
-			<h:message for="ajoutEmp"/>
-		</h:panelGrid>
-		
-
-				
-				
-
-			
-		
-	</h:form>
-	
-	
+	<h:link outcome="/pages/admin/gererEmploye" value="Gerer les employes"/>
+	<br />
+	<h:link outcome="/pages/admin/ajouterContrat" value="Ajouter contrat pour un employe existant"/>
 	
 	</ui:define>
-
 </ui:composition>
-

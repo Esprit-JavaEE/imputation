@@ -31,7 +31,8 @@ public class LoginBean {
 			navigateTo = "/pages/admin/welcome?faces-redirect=true";
 			loggedIn = true;
 		} else {
-			FacesContext.getCurrentInstance().addMessage("form:btn", new FacesMessage("bad credentials"));
+			FacesContext.getCurrentInstance().addMessage("form:btn", 
+												new FacesMessage("bad credentials"));
 		}
 		return navigateTo;
 	}
