@@ -4,9 +4,44 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/template/template.xhtml">
 
-	<ui:define name="title">Ajouter contrat a un employe existant</ui:define>
+	<ui:define name="title">Ajouter un contrat a un employé existant : </ui:define>
 	<ui:define name="content">
+	
+			<h:dataTable value="#{contratBean.contrats}" var="contrat" border="1">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Employé" />
+				</f:facet>
+				<h:outputText value="#{contrat.employe}" />
+			</h:column>
+		
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Type contrat" />
+				</f:facet>
+				<h:outputText value="#{contrat.typeContrat}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Salaire" />
+				</f:facet>
+				<h:outputText value="#{contrat.salaire}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Date Début" />
+				</f:facet>
+				<h:outputText value="#{contrat.dateDebut}" >
+					<f:convertDateTime pattern="dd-MM-yyyy"/>
+				</h:outputText>
+			</h:column>
 
+		</h:dataTable>
+	<br/>
+	<br/>
+	<br/>
 		<h:form>
 			<table>
 				<tr>
@@ -17,9 +52,11 @@
 						<h:selectOneMenu value="#{contratBean.selectedEmployeId}" >
 							<f:selectItems value="#{contratBean.employes}" 
 								var="employe" itemValue="#{employe.id}" 
-								itemLabel="#{employe.nom.concat(contratBean.htmlSpace).concat(employe.prenom)}"
+								itemLabel="#{employe}"
 								itemLabelEscaped="false" />
 						</h:selectOneMenu>
+						<!-- toString defini dans Employe -->
+						
 					</td>
 				</tr>
 				<tr>
@@ -56,7 +93,7 @@
 				
 			</table>
 			
-			<h:commandButton action="#{contratBean.ajouterContrat(0)}" value="Ajouter contrat" />
+			<h:commandButton action="#{contratBean.ajouterContrat()}" value="Ajouter contrat" />
 			
 		</h:form>
 

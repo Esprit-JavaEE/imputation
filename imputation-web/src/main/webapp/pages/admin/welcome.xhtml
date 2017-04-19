@@ -4,12 +4,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/template/template.xhtml">
 
-	<ui:define name="title">Welcome</ui:define>
+	<ui:define name="title">Choisir une fonctionnalité : </ui:define><br/>
 	<ui:define name="content">
 	
-	<h:link outcome="/pages/admin/gererEmploye" value="Gerer les employes"/>
+	<h:link outcome="/pages/admin/gererEmploye" value="Gérer les employés"/>
 	<br />
-	<h:link outcome="/pages/admin/ajouterContrat" value="Ajouter contrat pour un employe existant"/>
+	<br />
+	<h:link outcome="/pages/admin/ajouterContrat" value="Ajouter un contrat pour un employé existant"/>
 	
 	</ui:define>
 </ui:composition>

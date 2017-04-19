@@ -2,14 +2,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-
-
-	<center>Application Timesheet</center>
+	
+	<h:outputText value="Application Timesheet"/>
 	<h:form>
-		<center>welcome #{loginBean.employe.nom} #{loginBean.employe.prenom}
-
-		<h:commandButton action="#{loginBean.doLogout()}" value="logout" />
-		</center>
+		<h:outputText value="Bienvenue #{loginBean.employe.nom} #{loginBean.employe.prenom}"/>
+		<h:outputText value="#{data.htmlSpace}" escape="false"/>	
+		<h:commandButton action="#{loginBean.doLogout()}" value="Logout" />
 	</h:form>
+	<br/>
+	<h:link outcome="/pages/admin/welcome" value="Page d'accueil"/>
+	<br/>
+	<h1>
+		<ui:insert name="title"></ui:insert>
+	</h1>
 
 </ui:composition>

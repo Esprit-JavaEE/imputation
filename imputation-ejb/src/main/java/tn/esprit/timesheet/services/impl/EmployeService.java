@@ -269,6 +269,9 @@ public class EmployeService implements EmployeServiceRemote {
 		return em.createQuery("select e from Employe e", Employe.class).getResultList();
 	}
 	
+	public List<Contrat> getAllContrats() {
+		return em.createQuery("from Contrat c", Contrat.class).getResultList();
+	}
 
 	
 	

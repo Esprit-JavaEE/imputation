@@ -8,9 +8,19 @@ import tn.esprit.timesheet.entities.Role;
 @ManagedBean
 @ApplicationScoped
 public class Data {
+	
+	public final String htmlSpace = "&nbsp";
+
 
 	public Role[] getRoles(){
 		return Role.values();
 	}
+	
+
+	public String getHtmlSpace() {
+		return htmlSpace;
+	}
+
+	
 }
 

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 
+import tn.esprit.timesheet.entities.Contrat;
 import tn.esprit.timesheet.entities.Employe;
 import tn.esprit.timesheet.services.impl.EmployeService;
 
@@ -26,8 +27,8 @@ public class ContratBean {
 	
 	private Integer selectedEmployeId;
 	
-	public final String htmlSpace = "&nbsp";
-	
+	private List<Contrat> contrats;
+		
 	@EJB
 	EmployeService employeService;
 	
@@ -41,10 +42,16 @@ public class ContratBean {
 		employes = employeService.getAllEmployes();
 	}
 	
-	public void ajouterContrat(Integer employeId) throws ParseException{
+	public void ajouterContrat() throws ParseException{
 		SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
 		System.out.println("*******" + simpleFormat.format(date));
 		System.out.println("*******" + selectedEmployeId);
+		
+		Contrat contrat = new Contrat(date, typeContrat, salaire);
+		Employe selectedEmploye = new Employe();
+		selectedEmploye.setId(selectedEmployeId);
+		contrat.setEmploye(selectedEmploye);
+		employeService.ajouterContrat(contrat);
 	}
 	
 	public Date getDate() {
@@ -93,9 +100,13 @@ public class ContratBean {
 		this.selectedEmployeId = selectedEmployeId;
 	}
 
-	public String getHtmlSpace() {
-		return htmlSpace;
+	public List<Contrat> getContrats() {
+		contrats = employeService.getAllContrats();
+		return contrats;
 	}
-	
+
+	public void setContrats(List<Contrat> contrats) {
+		this.contrats = contrats;
+	}
 	
 }

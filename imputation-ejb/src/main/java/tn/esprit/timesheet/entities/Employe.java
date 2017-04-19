@@ -165,6 +165,9 @@ public class Employe implements Serializable {
 		this.timesheets = timesheets;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.nom + " " + this.prenom;
+	}
 	
 }

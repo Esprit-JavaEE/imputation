@@ -4,13 +4,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/template/template.xhtml">
 
-	<ui:define name="title">Gerer les employes</ui:define>
+	<ui:define name="title">Gérer les employés</ui:define>
 	<ui:define name="content">
 	
 	
 	<h:form>
-		<br/>
-		<br/>
 		<br/>	
 					<h:dataTable value="#{employeBean.employes}" var="employe" border="1" >
 						<h:column>
@@ -71,10 +69,12 @@
 		<h:panelGrid columns="2">
 		
 			<h:outputText value="login (email)" />
-			<h:inputText value="#{employeBean.email}" />
+			<h:inputText value="#{employeBean.email}" required="true">
+			    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+			</h:inputText>
 			
 			<h:outputText value="password" />
-			<h:inputSecret value="#{employeBean.password}" />
+			<h:inputSecret value="#{employeBean.password}" required="true" />
 			
 			<h:outputText value="nom" />
 			<h:inputText value="#{employeBean.nom}" />
