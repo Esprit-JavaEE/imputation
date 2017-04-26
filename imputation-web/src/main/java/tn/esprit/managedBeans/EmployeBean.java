@@ -30,47 +30,28 @@ public class EmployeBean {
 	@ManagedProperty(value = "#{loginBean}")
 	LoginBean loginBean;
 	
-	public String addEmploye(){
-		if(loginBean == null || !loginBean.isLoggedIn()){
-			return "/login?faces-redirect=true";
-		}
-		
+	public void addEmploye(){
 		employeService.ajouterEmploye(new Employe(nom, prenom, 
 				email, password, isActif, selectedRole));
-		
-		return "null";
 	}
 	
+//	if(loginBean == null || !loginBean.isLoggedIn()){
+//		return "/login?faces-redirect=true";
+//	}
 	//FacesContext.getCurrentInstance().addMessage("welcome:ajoutEmp", new FacesMessage("Erreur !"));
 
 	//Ceci ne fonctionne qu'avec @ViewScoped sinon les valeurs employeId, role ... seront perdu, 
 	//parce qu'il sont sauvegardé dans l'ancienne requete : appel a la methode modifier()
-	public String mettreAjourEmploye(){
-		if(loginBean == null || !loginBean.isLoggedIn()){
-			return "/login?faces-redirect=true";
-		}
-		
+	public void mettreAjourEmploye(){
 		employeService.updateEmploye(new Employe(nom, prenom, 
 				email, password, isActif, selectedRole, employeIdToBeUpdated));
-		
-		return "null";
 	}
 	
-	public String supprimer(Integer employeID){
-		if(loginBean == null || !loginBean.isLoggedIn()){
-			return "/login?faces-redirect=true";
-		}
-		
+	public void supprimer(Integer employeID){
 		employeService.deleteEmployeById(employeID);
-		
-		return "null";
 	}
 	
-	public String modifier(Employe employe){
-		if(loginBean == null || !loginBean.isLoggedIn()){
-			return "/login?faces-redirect=true";
-		}
-		
+	public void modifier(Employe employe){
 		this.setEmail(employe.getEmail());
 		this.setPassword(employe.getPassword());
 		this.setActif(employe.isActif());
@@ -78,8 +59,6 @@ public class EmployeBean {
 		this.setNom(employe.getNom());
 		this.setRole(employe.getRole());
 		this.setEmployeIdToBeUpdated(employe.getId());
-		
-		return "null";
 	}
 
 	

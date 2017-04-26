@@ -60,21 +60,26 @@
 
 				 </h:dataTable>
 				
-				
+				</h:form>
+				<h:form>
 	
 				<br/>
 				<br/>
 				<br/>
 	
+<!-- 					    <f:validateRegex pattern=".+\@.+\..+" /> -->
 		<h:panelGrid columns="2">
-		
 			<h:outputText value="login (email)" />
-			<h:inputText value="#{employeBean.email}" required="true">
-			    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+			<h:inputText id="validationEmail" 
+						 value="#{employeBean.email}" 
+						 required="true"
+						 requiredMessage="le champs email est obligatoire">
+				<f:validator validatorId="tn.esprit.validator.EmailValidator"/>
 			</h:inputText>
 			
 			<h:outputText value="password" />
-			<h:inputSecret value="#{employeBean.password}" required="true" />
+			<h:inputSecret value="#{employeBean.password}" 
+							required="true" />
 			
 			<h:outputText value="nom" />
 			<h:inputText value="#{employeBean.nom}" />
@@ -95,17 +100,9 @@
 			
 			<h:commandButton action="#{employeBean.mettreAjourEmploye()}" value="Mettre a jour employe" />
 		</h:panelGrid>
-		
-
-				
-				
-
-			
+		<h:message for="validationEmail" style="color:green" />
 		
 	</h:form>
-	
-	
-	
 	</ui:define>
 
 </ui:composition>

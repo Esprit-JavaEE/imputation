@@ -16,25 +16,16 @@ import tn.esprit.timesheet.services.impl.EmployeService;
 @ManagedBean
 //defaut scope is request
 public class ContratBean {
-
 	private Date date;
-	
 	private String typeContrat;
-	
 	private Float salaire;
-	
 	private List<Employe> employes;
-	
 	private Integer selectedEmployeId;
-	
 	private List<Contrat> contrats;
 		
 	@EJB
 	EmployeService employeService;
 	
-//	SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
-//	date = simpleFormat.parse("28-12-2015");
-//	System.out.println("*******" + simpleFormat.format(new Date()));
 	@PostConstruct
 	public void init(){
 		date = new Date();   //default value
@@ -44,8 +35,8 @@ public class ContratBean {
 	
 	public void ajouterContrat() throws ParseException{
 		SimpleDateFormat simpleFormat = new SimpleDateFormat("dd-MM-yyyy");
-		System.out.println("*******" + simpleFormat.format(date));
-		System.out.println("*******" + selectedEmployeId);
+		System.out.println("dateDebut : " + simpleFormat.format(date));
+		System.out.println("selectedEmployeId : " + selectedEmployeId);
 		
 		Contrat contrat = new Contrat(date, typeContrat, salaire);
 		Employe selectedEmploye = new Employe();

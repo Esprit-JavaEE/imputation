@@ -10,7 +10,7 @@ import tn.esprit.timesheet.entities.Role;
 public class Data {
 	
 	public final String htmlSpace = "&nbsp";
-
+	public final static String formatDate = "dd-MM-yyyy";
 
 	public Role[] getRoles(){
 		return Role.values();
@@ -21,6 +21,10 @@ public class Data {
 		return htmlSpace;
 	}
 
-	
+
+	public String getFormatDate() {
+		return formatDate;
+	}
+
 }
 

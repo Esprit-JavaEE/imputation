@@ -42,7 +42,7 @@
 	<br/>
 	<br/>
 	<br/>
-		<h:form>
+		<h:form id="ajoutContrat">
 			<table>
 				<tr>
 					<td>
@@ -52,11 +52,9 @@
 						<h:selectOneMenu value="#{contratBean.selectedEmployeId}" >
 							<f:selectItems value="#{contratBean.employes}" 
 								var="employe" itemValue="#{employe.id}" 
-								itemLabel="#{employe}"
-								itemLabelEscaped="false" />
+								itemLabel="#{employe}" />
 						</h:selectOneMenu>
 						<!-- toString defini dans Employe -->
-						
 					</td>
 				</tr>
 				<tr>
@@ -65,23 +63,27 @@
 					</td>
 					<td>
 						<h:inputText id="date" value="#{contratBean.date}">
-								<f:convertDateTime pattern="dd-MM-yyyy"/>
+								<f:convertDateTime pattern="#{data.formatDate}"/>
 						</h:inputText>
 					</td>
 					<td>
 						<h:message for="date" style="color:red" />
 					</td>
 				</tr>
-
 				<tr>
 					<td>
 					<h:outputText value="Salaire" />
 					</td>
 					<td>
-					<h:inputText value="#{contratBean.salaire}" />
+					<h:inputText id="validateSalaire"
+								 value="#{contratBean.salaire}" 
+								 required="true"
+								 requiredMessage="Le contrat doit spécifier le salaire"
+								 validatorMessage="Le salaire doit etre compris	entre 350 et 3500">
+						<f:validateDoubleRange minimum="350" maximum="3500" for="validateSalaire"/>
+					</h:inputText>
 					</td>
 				</tr>
-
 				<tr>
 					<td>
 					<h:outputText value="Type contrat" /> 
@@ -94,8 +96,10 @@
 			</table>
 			
 			<h:commandButton action="#{contratBean.ajouterContrat()}" value="Ajouter contrat" />
+			<br/><h:message for="validateSalaire" style="color:green" />
 			
 		</h:form>
+		
 
 	</ui:define>
 

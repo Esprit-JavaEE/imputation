@@ -31,7 +31,7 @@ public class Employe implements Serializable {
 	
 	private String password;
 	
-	@Column(unique=true, nullable=false) // A revoir et rajouter dans le cours
+	@Column(unique=true, nullable=false)
 	private String email;
 	
 	private boolean isActif;
@@ -44,7 +44,7 @@ public class Employe implements Serializable {
 	//@NotNull
 	private List<Departement> departements;
 	
-	@OneToOne(mappedBy="employe")
+	@OneToOne(mappedBy="employe", cascade=CascadeType.REMOVE)
 	private Contrat contrat;
 	
 	@OneToMany(mappedBy="employe")
